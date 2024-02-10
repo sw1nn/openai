@@ -73,7 +73,10 @@ FREQUENCY-PENALTY, BEST-OF, and LOGIT-BIAS."
     :headers (openai--headers content-type key org-id)
     :data (openai--json-encode
            `(("model"             . ,model)
-             ("prompt"            . ,prompt)
+             ("messages"          . [(("role" . "system")
+                                      ("content" . "You are a helpful assistant"))
+                                     (("role" . "user")
+                                      ("content" . ,prompt))])
              ("suffix"            . ,suffix)
              ("max_tokens"        . ,max-tokens)
              ("temperature"       . ,temperature)

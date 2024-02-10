@@ -232,7 +232,7 @@ Argument OPTIONS ia an alist use to calculate the frame offset."
         (texts))
     (mapc (lambda (choice)
             (let-alist choice
-              (push .text texts)))  ; text is the only important data in there
+              (push .message.content texts)))  ; text is the only important data in there
           choices)
     texts))
 
