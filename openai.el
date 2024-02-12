@@ -97,6 +97,11 @@ monitor and detect abuse.")
   :type 'list
   :group 'openai)
 
+(defcustom openai-system-instructions "You are a helpful assistant"
+  "The content of the system message in the prompt"
+  :type 'string
+  :group 'openai)
+
 ;;;###autoload
 (defun openai-key-auth-source (&optional base-url)
   "Retrieve the OpenAI API key from auth-source given a BASE-URL.
@@ -229,12 +234,12 @@ Argument OPTIONS ia an alist use to calculate the frame offset."
 (defun openai--data-choices (data)
   "Extract choices from DATA request."
   (let ((choices (let-alist data .choices))  ; choices if vector
-        (texts))
+        (contents))
     (mapc (lambda (choice)
             (let-alist choice
-              (push .message.content texts)))  ; text is the only important data in there
+              (push .message.content contents)))  ; .message.content is the only important data in there
           choices)
-    texts))
+    contents))
 
 (defun openai--get-choice (choices)
   "Return choice from CHOICES."
